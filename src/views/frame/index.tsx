@@ -3,8 +3,9 @@ import { Layout, Menu, FloatButton, MenuProps } from "antd";
 import React, { useContext, useMemo, useRef, useState } from "react";
 
 import { ThemeContext } from "@/context";
-import { APP_MENUS, createAntdMenu } from "@/route/menu";
+
 import type { AppMenu } from "@/route/menu";
+import { APP_MENUS, createAntdMenu } from "@/route/menu";
 
 import styles from "./index.module.scss";
 
@@ -77,16 +78,16 @@ const Framework: React.FC = () => {
  * 获取所有一级菜单的 key.
  */
 function getRootMenuKeys(menus: AppMenu[]): string[] {
-  const rootIds: number[] = [];
+  const roots: number[] = [];
 
   for (const menu of menus) {
     if (menu.path === "/") {
-      menu.children?.forEach((child) => !child.notMenu && rootIds.push(child.id));
+      menu.children?.forEach((child) => !child.notMenu && roots.push(child.id));
     } else {
-      !menu.notMenu && rootIds.push(menu.id);
+      !menu.notMenu && roots.push(menu.id);
     }
   }
-  return rootIds.map((v) => v + "");
+  return roots.map((v) => v + "");
 }
 
 /**

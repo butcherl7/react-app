@@ -204,13 +204,13 @@ function createAntdMenu(menus: AppMenu[]): MenuItem[] {
         }
       }
     } else {
-      const path = menu.prevPath ? menu.prevPath + "/" + menu.path : menu.path;
+      const fullpath = (menu.prevPath ? menu.prevPath + "/" + menu.path : menu.path) as string;
 
       const menuItem: any = {
-        path: path, // 方便通过路由找到这个菜单项。
+        path: fullpath, // 方便通过路由找到这个菜单项。
         key: menu.id + "",
         icon: menu.icon,
-        label: <NavLink to={path as string}>{menu.title}</NavLink>,
+        label: <NavLink to={fullpath}>{menu.title}</NavLink>,
       };
 
       if (hasChildren) {
