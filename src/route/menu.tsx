@@ -214,7 +214,7 @@ function createAntdMenu(menus: AppMenu[]): MenuItem[] {
       };
 
       if (hasChildren) {
-        menu.children!.forEach((child) => (child.prevPath = menu.path));
+        menu.children!.forEach((child) => (child.prevPath = fullpath));
         menuItem.children = createAntdMenu(menu.children!);
         // 有 children 就当不是路由。
         menuItem.label = menu.title;
