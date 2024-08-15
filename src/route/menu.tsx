@@ -1,5 +1,5 @@
 import type { MenuProps } from "antd";
-import { NavLink, RouteObject } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AreaChartOutlined, BarChartOutlined, OrderedListOutlined, WindowsOutlined } from "@ant-design/icons";
 
 import Home from "@/views/home";
@@ -11,63 +11,115 @@ import { ChartDemo1, ChartDemo2 } from "@/views/echart";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-interface SystemMenu {
+/**
+ * 菜单结构。
+ */
+interface AppMenu {
+  /**
+   * 菜单 ID
+   */
   id: number;
+
+  /**
+   * 菜单标题
+   */
   title?: string;
+
+  /**
+   * 菜单路径
+   */
   path?: string;
+
+  /**
+   * 是否是 `Index Route`
+   * @see https://reactrouter.com/en/main/start/concepts#index-routes
+   */
   index?: boolean;
-  notMenu?: boolean;
-  newTab?: boolean;
+
+  /**
+   * 是否不是菜单
+   */
+  // notMenu?: boolean;
+
+  /**
+   * 在新标签页打开
+   */
+  openInNewTab?: boolean;
+
+  /**
+   * 是否不需要框架
+   */
   frameless?: boolean;
+
+  /**
+   * 菜单图标
+   */
   icon?: React.ReactNode;
+
+  /**
+   * 菜单内容元素
+   */
   element?: React.ReactNode;
-  children?: SystemMenu[];
+
+  /**
+   * 子菜单
+   */
+  children?: AppMenu[];
+
+  /**
+   * 其它属性
+   */
   [propName: string]: any;
 }
 
-class ID {
-  id: number = 0;
-  public increment() {
-    return ++this.id;
-  }
+function IDGenerator() {
+  let id = 0;
+  return {
+    increment: function () {
+      return id++;
+    },
+  };
 }
 
-const id = new ID();
+const ID = IDGenerator();
 
-const AppMenu: SystemMenu[] = [
+/**
+ * 系统菜单。
+ */
+const APP_MENUS: AppMenu[] = [
   {
-    id: id.increment(),
+    id: ID.increment(),
     path: "/",
     element: <Framework />,
-    notMenu: true,
+    // notMenu: true,
     children: [
       {
-        id: id.increment(),
+        id: ID.increment(),
         index: true,
-        notMenu: true,
+        // notMenu: true,
         element: <Home />,
       },
       {
-        id: id.increment(),
+        id: ID.increment(),
         path: "chart",
         title: "Chart",
         icon: <BarChartOutlined />,
         children: [
           {
-            id: id.increment(),
+            id: ID.increment(),
             index: true,
-            notMenu: true,
+            // notMenu: true,
             element: <div>Chart</div>,
           },
           {
-            id: id.increment(),
+            id: ID.increment(),
             path: "demo1",
             title: "Demo1",
             element: <ChartDemo1 />,
             icon: <AreaChartOutlined />,
           },
           {
-            id: id.increment(),
+            id: ID.increment(),
             path: "demo2",
             title: "Demo2",
             element: <ChartDemo2 />,
@@ -76,20 +128,20 @@ const AppMenu: SystemMenu[] = [
         ],
       },
       {
-        id: id.increment(),
+        id: ID.increment(),
         path: "antc",
         title: "Antc",
         icon: <OrderedListOutlined />,
         children: [
           {
-            id: id.increment(),
+            id: ID.increment(),
             path: "list",
             title: "List",
             element: <List />,
             icon: <OrderedListOutlined />,
           },
           {
-            id: id.increment(),
+            id: ID.increment(),
             path: "token",
             title: "Token",
             element: <AntToken />,
@@ -98,13 +150,13 @@ const AppMenu: SystemMenu[] = [
         ],
       },
       {
-        id: id.increment(),
+        id: ID.increment(),
         path: "react",
         title: "React",
         icon: <OrderedListOutlined />,
         children: [
           {
-            id: id.increment(),
+            id: ID.increment(),
             path: "effect",
             title: "Effect",
             element: <Effect />,
@@ -127,22 +179,6 @@ const AppMenu: SystemMenu[] = [
 ); */
 
 /**
- * 生成 `React Router` 路由对象。
- *
- * @param menus SystemMenus
- * @returns RouterObject
- */
-function createRouterObject(menus: SystemMenu[]): RouteObject[] {
-  return menus.map(({ path, element, index, children }) => {
-    const router: RouteObject = { path, element, index };
-    if (Array.isArray(children) && children.length > 0) {
-      router.children = createRouterObject(children);
-    }
-    return router;
-  });
-}
-
-/**
  * 生成系统菜单。
  *
  * ```ts
@@ -150,16 +186,17 @@ function createRouterObject(menus: SystemMenu[]): RouteObject[] {
  *    return { key, icon, children, label };
  * }
  * ```
- * @param menus SystemMenus
+ * @param menus AppMenus
  * @returns Antd 菜单项
  */
-function createAntdMenu(menus: SystemMenu[]): MenuItem[] {
+function createAntdMenu(menus: AppMenu[]): MenuItem[] {
   const menuItems = [];
 
   for (const menu of menus) {
     const hasChildren = Array.isArray(menu.children) && menu.children.length > 0;
+    const notMenu = menu.path === "/" || menu.index;
 
-    if (menu.notMenu) {
+    if (notMenu) {
       if (hasChildren) {
         const antMenu = createAntdMenu(menu.children!);
         if (antMenu.length > 0) {
@@ -188,5 +225,5 @@ function createAntdMenu(menus: SystemMenu[]): MenuItem[] {
   return menuItems;
 }
 
-export { AppMenu, createRouterObject, createAntdMenu };
-export type { SystemMenu };
+export { APP_MENUS, createAntdMenu };
+export type { AppMenu };

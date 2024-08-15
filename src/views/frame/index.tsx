@@ -3,7 +3,8 @@ import { Layout, Menu, FloatButton, MenuProps } from "antd";
 import React, { useContext, useMemo, useRef, useState } from "react";
 
 import { ThemeContext } from "@/context";
-import { AppMenu, SystemMenu, createAntdMenu } from "@/route/menu";
+import { APP_MENUS, createAntdMenu } from "@/route/menu";
+import type { AppMenu } from "@/route/menu";
 
 import styles from "./index.module.scss";
 
@@ -20,8 +21,8 @@ const Framework: React.FC = () => {
   // 只在页面初次加载时执行一次。
   const menuMemo = useMemo(() => {
     const pathname = location.pathname;
-    const menuItems = createAntdMenu(AppMenu);
-    const rootMenuKeys = getRootMenuKeys(AppMenu);
+    const menuItems = createAntdMenu(APP_MENUS);
+    const rootMenuKeys = getRootMenuKeys(APP_MENUS);
 
     const openKeys = findkeys(menuItems, pathname, []);
     const selectedKeys = openKeys.length > 0 ? [openKeys[0]] : [];
@@ -75,7 +76,7 @@ const Framework: React.FC = () => {
 /**
  * 获取所有一级菜单的 key.
  */
-function getRootMenuKeys(menus: SystemMenu[]): string[] {
+function getRootMenuKeys(menus: AppMenu[]): string[] {
   const rootIds: number[] = [];
 
   for (const menu of menus) {
