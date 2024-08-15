@@ -35,7 +35,7 @@ const Framework: React.FC = () => {
 
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (latestOpenKey && menuMemo.rootMenuKeys.indexOf(latestOpenKey!) === -1) {
+    if (latestOpenKey && menuMemo.rootMenuKeys.indexOf(latestOpenKey) === -1) {
       setOpenKeys(keys);
     } else {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
