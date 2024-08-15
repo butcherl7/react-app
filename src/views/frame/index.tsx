@@ -25,13 +25,14 @@ const Framework: React.FC = () => {
     const menuItems = createAntdMenu(APP_MENUS);
     const rootMenuKeys = getRootMenuKeys(APP_MENUS);
 
-    const openKeys = findkeys(menuItems, pathname, []);
-    const selectedKeys = openKeys.length > 0 ? [openKeys[0]] : [];
+    const initialOpenKeys = findkeys(menuItems, pathname, []);
+    const initialSelectedKey = initialOpenKeys.length > 0 ? [initialOpenKeys[0]] : [];
 
-    return { menuItems, rootMenuKeys, openKeys, selectedKeys };
+    // 系统菜单，一级菜单 key，初次打开的菜单 key，初次选中的菜单 key
+    return { menuItems, rootMenuKeys, initialOpenKeys, initialSelectedKey };
   }, []);
 
-  const [openKeys, setOpenKeys] = useState<string[]>(menuMemo.openKeys);
+  const [openKeys, setOpenKeys] = useState<string[]>(menuMemo.initialOpenKeys);
 
   const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -45,8 +46,8 @@ const Framework: React.FC = () => {
   return (
     <Layout className={styles.layout}>
       <Sider
-        theme={menuTheme}
         collapsible
+        theme={menuTheme}
         collapsed={collapsed}
         className={styles.sider}
         onCollapse={(value) => setCollapsed(value)}
@@ -59,7 +60,7 @@ const Framework: React.FC = () => {
           className={styles.menu}
           items={menuMemo.menuItems}
           onOpenChange={onOpenChange}
-          defaultSelectedKeys={menuMemo.selectedKeys}
+          defaultSelectedKeys={menuMemo.initialSelectedKey}
         />
       </Sider>
 
