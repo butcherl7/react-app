@@ -1,0 +1,19 @@
+/* .custom-pass-notice {
+  // background-color: red;
+  //   color: #67c23a;
+  //   border-radius: 12px;
+
+  & .ant-notification-notice-message,
+  & .ant-notification-notice-description {
+    color: #67c23a !important;
+  }
+} */
+
+.calendar {
+  // 使用 global 包裹的类名会保持不变。
+  :global {
+    .ant-picker-calendar-date-content {
+      height: 50px !important;
+    }
+  }
+}

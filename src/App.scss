@@ -1,0 +1,18 @@
+.ant-notification-notice-wrapper:has(.custom-pass-notice) {
+    background-color: #f0f9eb;
+  
+    .ant-notification-notice-message,
+    .ant-notification-notice-description {
+      color: #67c23a;
+    }
+  }
+  
+  .ant-notification-notice-wrapper:has(.custom-fail-notice) {
+    background-color: #fef0f0;
+  
+    .ant-notification-notice-message,
+    .ant-notification-notice-description {
+      color: #f56c6c;
+    }
+  }
+  
