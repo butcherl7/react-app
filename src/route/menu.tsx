@@ -8,6 +8,7 @@ import AntToken from "@/views/antd/overview";
 import Framework from "@/views/frame";
 import Effect from "@/views/react/effect";
 import { ChartDemo1, ChartDemo2 } from "@/views/echart";
+import G2Demo1 from "@/views/antv/g2/Demo1";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -146,6 +147,29 @@ const APP_MENUS: AppMenu[] = [
             title: "Token",
             element: <AntToken />,
             icon: <OrderedListOutlined />,
+          },
+        ],
+      },
+      {
+        id: ID.increment(),
+        path: "antv",
+        title: "AntV",
+        icon: <OrderedListOutlined />,
+        children: [
+          {
+            id: ID.increment(),
+            path: "g2",
+            title: "G2",
+            icon: <OrderedListOutlined />,
+            children: [
+              {
+                id: ID.increment(),
+                path: "demo1",
+                title: "Demo1",
+                element: <G2Demo1 />,
+                icon: <OrderedListOutlined />,
+              },
+            ],
           },
         ],
       },
