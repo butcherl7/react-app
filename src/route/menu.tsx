@@ -38,11 +38,6 @@ interface AppMenu {
   index?: boolean;
 
   /**
-   * 是否不是菜单
-   */
-  // notMenu?: boolean;
-
-  /**
    * 在新标签页打开
    */
   openInNewTab?: boolean;
@@ -53,19 +48,19 @@ interface AppMenu {
   frameless?: boolean;
 
   /**
+   * 子菜单
+   */
+  children?: AppMenu[];
+
+  /**
    * 菜单图标
    */
   icon?: React.ReactNode;
 
   /**
-   * 菜单内容元素
+   * 菜单元素
    */
   element?: React.ReactNode;
-
-  /**
-   * 子菜单
-   */
-  children?: AppMenu[];
 
   /**
    * 其它属性
@@ -92,12 +87,10 @@ const APP_MENUS: AppMenu[] = [
     id: ID.increment(),
     path: "/",
     element: <Framework />,
-    // notMenu: true,
     children: [
       {
         id: ID.increment(),
         index: true,
-        // notMenu: true,
         element: <Home />,
       },
       {
@@ -109,7 +102,6 @@ const APP_MENUS: AppMenu[] = [
           {
             id: ID.increment(),
             index: true,
-            // notMenu: true,
             element: <div>Chart</div>,
           },
           {
