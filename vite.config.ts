@@ -32,11 +32,12 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // 按模块分包。
-        manualChunks(id) {
+        /* manualChunks(id) {
           if (id.includes("node_modules")) {
-            return id.toString().split("node_modules/")[1].split("/")[0].toString();
+            // pnpm 在路径中使用 node_modules/.pnpm/
+            return id.toString().split("node_modules/.pnpm/")[1].split("/")[0].toString();
           }
-        },
+        }, */
       },
     },
   },
