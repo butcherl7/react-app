@@ -27,7 +27,7 @@ function createRouterObject(menus: AppMenu[]): RouteObject[] {
       /* const a = new Promise((resolve) => (setTimeout(resolve, 6000)));
       const b = () => a.then(() => import(filepath)); */
 
-      const Component = React.lazy(() => import(filepath));
+      const Component = React.lazy(() => import(/* @vite-ignore */ filepath));
       router.element = (
         <Suspense fallback={<p>🌀 Loading...</p>}>
           <Component />
