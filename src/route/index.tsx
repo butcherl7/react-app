@@ -1,9 +1,7 @@
+import React, { Suspense } from "react";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 
-import { APP_MENUS } from "./menu";
-import type { AppMenu } from "./menu";
-import { Suspense } from "react";
-import React from "react";
+import { APP_MENUS, AppMenu } from "./menu";
 
 /* 如果没有引用 ".../@remix-run/router"，则无法命名 "router" 的推断类型。这很可能不可移植。需要类型注释。
 https://github.com/remix-run/react-router/issues/10787
