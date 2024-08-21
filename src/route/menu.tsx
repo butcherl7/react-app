@@ -3,12 +3,8 @@ import { NavLink } from "react-router-dom";
 import { AreaChartOutlined, BarChartOutlined, OrderedListOutlined, WindowsOutlined } from "@ant-design/icons";
 
 import Home from "@/views/home";
-import List from "@/views/antd/list";
-import AntToken from "@/views/antd/overview";
 import Framework from "@/views/frame";
 import Effect from "@/views/react/effect";
-import { ChartDemo1, ChartDemo2 } from "@/views/echart";
-import G2Demo1 from "@/views/antv/g2/Demo1";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -32,10 +28,9 @@ interface AppMenu {
   path?: string;
 
   /**
-   * 是否是 `Index Route`
-   * @see https://reactrouter.com/en/main/start/concepts#index-routes
+   * 组件文件路径
    */
-  index?: boolean;
+  filepath?: string;
 
   /**
    * 在新标签页打开
@@ -61,6 +56,12 @@ interface AppMenu {
    * 菜单元素
    */
   element?: React.ReactNode;
+
+  /**
+   * 是否是 `Index Route`。
+   * @see https://reactrouter.com/en/main/start/concepts#index-routes
+   */
+  index?: boolean;
 
   /**
    * 其它属性
@@ -108,14 +109,14 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "demo1",
             title: "Demo1",
-            element: <ChartDemo1 />,
+            filepath: "/src/views/echart/demo1/index.tsx",
             icon: <AreaChartOutlined />,
           },
           {
             id: ID.increment(),
             path: "demo2",
             title: "Demo2",
-            element: <ChartDemo2 />,
+            filepath: "/src/views/echart/demo2/index.tsx",
             icon: <WindowsOutlined />,
           },
         ],
@@ -130,14 +131,14 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "list",
             title: "List",
-            element: <List />,
+            filepath: "/src/views/antd/list/index.tsx",
             icon: <OrderedListOutlined />,
           },
           {
             id: ID.increment(),
             path: "token",
             title: "Token",
-            element: <AntToken />,
+            filepath: "/src/views/antd/overview/index.tsx",
             icon: <OrderedListOutlined />,
           },
         ],
@@ -158,7 +159,7 @@ const APP_MENUS: AppMenu[] = [
                 id: ID.increment(),
                 path: "demo1",
                 title: "Demo1",
-                element: <G2Demo1 />,
+                filepath: "/src/views/antv/g2/Demo1.tsx",
                 icon: <OrderedListOutlined />,
               },
             ],
