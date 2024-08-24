@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Button, Modal, Switch, Space } from "antd";
 
+import { SimpleCard } from "@/component";
 import { echarts } from "@/common/echarts";
 
 const option = {
@@ -59,7 +60,7 @@ export default function Demo2() {
         onCancel={hideModal}
         afterOpenChange={afterOpenChange}
       >
-        <div style={{ height: 300, border: "1px solid black" }} ref={chartDOM}></div>
+        <SimpleCard style={{ height: 300 }} ref={chartDOM}></SimpleCard>
       </Modal>
     </section>
   );

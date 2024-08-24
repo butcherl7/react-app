@@ -1,5 +1,6 @@
-import { echarts } from "@/common/echarts";
 import { useEffect, useRef } from "react";
+import { SimpleCard } from "@/component";
+import { echarts } from "@/common/echarts";
 
 const option = {
   xAxis: {
@@ -27,9 +28,9 @@ export default function Demo1() {
   }, []);
 
   return (
-    <section
-      style={{ width: 500, height: 300, border: "1px solid black" }}
+    <SimpleCard
+      style={{ width: 500, height: 300 }}
       ref={(dom) => !myChart.current && (myChart.current = echarts.init(dom))}
-    ></section>
+    ></SimpleCard>
   );
 }

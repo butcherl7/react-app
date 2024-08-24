@@ -1,5 +1,5 @@
 import { Chart } from "@antv/g2";
-import { Card } from "antd";
+import { SimpleCard } from "@/component";
 import { useEffect, useRef } from "react";
 
 export default function Demo1() {
@@ -21,10 +21,10 @@ export default function Demo1() {
   }, []);
 
   return (
-    <section
-      style={{ width: 500, height: 300, border: "1px solid rgb(240, 240, 240)" }}
+    <SimpleCard
+      style={{ width: 500, height: 300 }}
       ref={(dom) => !myChart.current && (myChart.current = createChart(dom!))}
-    ></section>
+    ></SimpleCard>
   );
 }
 

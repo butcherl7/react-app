@@ -159,7 +159,7 @@ const APP_MENUS: AppMenu[] = [
                 id: ID.increment(),
                 path: "demo1",
                 title: "Demo1",
-                filepath: "/src/view/antv/g2/Demo1.tsx",
+                filepath: "/src/view/antv/g2/demo1/index.tsx",
                 icon: <OrderedListOutlined />,
               },
             ],
