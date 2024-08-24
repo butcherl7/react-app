@@ -1,7 +1,7 @@
 import React from "react";
 import { theme } from "antd";
 
-type SimpleCardProps = React.HTMLAttributes<HTMLDivElement>;
+type SimpleCardProps = React.HTMLAttributes<HTMLElement>;
 
 /**
  * 一个带有边框的 div 容器。
