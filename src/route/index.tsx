@@ -13,7 +13,11 @@ const router = createBrowserRouter(createRouterObject(APP_MENUS));
 
 /**
  * 生成 `React Router` 路由对象。
- *
+ * ```ts
+ * const Component = React.lazy(() =>
+ *  new Promise((resolve) => setTimeout(resolve, 2000)).then(() => import(filepath))
+ * );
+ * ```
  * @param menus SystemMenus
  * @returns RouterObject
  */
@@ -24,9 +28,6 @@ function createRouterObject(menus: AppMenu[]): RouteObject[] {
     if (element) {
       router.element = element;
     } else if (filepath) {
-      /* const a = new Promise((resolve) => (setTimeout(resolve, 6000)));
-      const b = () => a.then(() => import(filepath)); */
-
       const Component = React.lazy(() => import(/* @vite-ignore */ filepath));
       router.element = (
         <Suspense fallback={<p>🌀 Loading...</p>}>
