@@ -1,0 +1,14 @@
+.card {
+  text-align: center;
+
+  :global {
+    .anticon {
+      font-size: 26px;
+      margin-bottom: 12px;
+    }
+
+    .ant-card-meta-description {
+      font-size: 12px;
+    }
+  }
+}
