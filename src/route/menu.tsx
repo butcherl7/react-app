@@ -2,9 +2,9 @@ import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
 import { AreaChartOutlined, BarChartOutlined, OrderedListOutlined, WindowsOutlined } from "@ant-design/icons";
 
-import Home from "@/views/home";
-import Framework from "@/views/frame";
-import Effect from "@/views/react/effect";
+import Home from "@/view/home";
+import Framework from "@/view/frame";
+import Effect from "@/view/react/effect";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -109,14 +109,14 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "demo1",
             title: "Demo1",
-            filepath: "/src/views/echart/demo1/index.tsx",
+            filepath: "/src/view/echart/demo1/index.tsx",
             icon: <AreaChartOutlined />,
           },
           {
             id: ID.increment(),
             path: "demo2",
             title: "Demo2",
-            filepath: "/src/views/echart/demo2/index.tsx",
+            filepath: "/src/view/echart/demo2/index.tsx",
             icon: <WindowsOutlined />,
           },
         ],
@@ -131,14 +131,14 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "list",
             title: "List",
-            filepath: "/src/views/antd/list/index.tsx",
+            filepath: "/src/view/antd/list/index.tsx",
             icon: <OrderedListOutlined />,
           },
           {
             id: ID.increment(),
             path: "token",
             title: "Token",
-            filepath: "/src/views/antd/overview/index.tsx",
+            filepath: "/src/view/antd/overview/index.tsx",
             icon: <OrderedListOutlined />,
           },
         ],
@@ -159,7 +159,7 @@ const APP_MENUS: AppMenu[] = [
                 id: ID.increment(),
                 path: "demo1",
                 title: "Demo1",
-                filepath: "/src/views/antv/g2/Demo1.tsx",
+                filepath: "/src/view/antv/g2/Demo1.tsx",
                 icon: <OrderedListOutlined />,
               },
             ],
