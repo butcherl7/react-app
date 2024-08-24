@@ -1,11 +1,9 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { Layout, Menu, FloatButton, MenuProps } from "antd";
+import { Layout, Menu, FloatButton, MenuProps, theme } from "antd";
 import React, { useContext, useMemo, useRef, useState } from "react";
 
 import { ThemeContext } from "@/context";
-
-import type { AppMenu } from "@/route/menu";
-import { APP_MENUS, createAntdMenu } from "@/route/menu";
+import { APP_MENUS, createAntdMenu, AppMenu } from "@/route/menu";
 
 import styles from "./index.module.scss";
 
@@ -18,6 +16,10 @@ const Framework: React.FC = () => {
 
   const themeContext = useContext(ThemeContext);
   const menuTheme = themeContext.isDarkMode ? "dark" : "dark"; // always dark
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
   // 只在页面初次加载时执行一次。
   const menuMemo = useMemo(() => {
@@ -64,7 +66,7 @@ const Framework: React.FC = () => {
         />
       </Sider>
 
-      <Layout className={styles.center}>
+      <Layout className={styles.center} style={{ background: colorBgContainer }}>
         {/* <div className={styles.header}></div> */}
         <Content className={styles.content} ref={contentRef}>
           <Outlet />
