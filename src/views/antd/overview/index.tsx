@@ -376,6 +376,7 @@ function MiniTable({ pass, setPass }: any) {
           <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />
           <Switch checkedChildren="PASS" unCheckedChildren="NG" value={pass} onChange={(c) => setPass(c)} />
           <Switch
+            value={themeContext.isDarkMode}
             checkedChildren={<MoonOutlined />}
             unCheckedChildren={<SunOutlined />}
             onChange={(c) => themeContext.setDarkMode(c)}
