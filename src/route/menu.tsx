@@ -123,8 +123,8 @@ const APP_MENUS: AppMenu[] = [
       },
       {
         id: ID.increment(),
-        path: "antc",
-        title: "Antc",
+        path: "antd",
+        title: "AntD",
         icon: <OrderedListOutlined />,
         children: [
           {
