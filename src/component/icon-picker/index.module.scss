@@ -1,7 +1,12 @@
 .card {
+  width: 100px;
   text-align: center;
 
   :global {
+    .ant-card-body {
+      padding: 12px 6px;
+    }
+
     .anticon {
       font-size: 26px;
       margin-bottom: 12px;

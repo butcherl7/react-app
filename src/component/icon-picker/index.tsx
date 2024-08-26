@@ -1,88 +1,89 @@
-import React from "react";
-import * as AntIcon from "@ant-design/icons";
-import { Card, List, Tabs, TabsProps } from "antd";
-import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
+import VirtualList from "rc-virtual-list";
+import React, { useRef, useState } from "react";
+import { Card, Flex, GetProps, Input, List, theme } from "antd";
 
-const { Meta } = Card;
-
+import { AllIconsName, IconPickerProps, RefIcon, getIconByName } from "./util";
 import styles from "./index.module.scss";
 
-type IconName = keyof typeof AntIcon;
-type RefIcon = React.ForwardRefExoticComponent<Omit<AntdIconProps, "ref"> & React.RefAttributes<HTMLSpanElement>>;
+type SearchProps = GetProps<typeof Input.Search>;
 
-const IconPicker: React.FC = () => {
-  const keys = Object.keys(AntIcon).sort((a, b) => a.localeCompare(b));
+const IconPicker: React.FC<IconPickerProps> = (props) => {
+  const [iconNams, setIconNams] = useState(AllIconsName);
+  const lastPickedCard = useRef<HTMLDivElement>();
 
-  const outlineds: RefIcon[] = [],
-    filleds: RefIcon[] = [],
-    twoTones: RefIcon[] = [];
+  const {
+    token: { controlItemBgActive },
+  } = theme.useToken();
 
-  const iconMap: Map<string, RefIcon> = new Map();
+  const { columns = 8, searchWidth = 200, onPick } = props;
 
-  for (const key of keys) {
-    let icon = AntIcon[key as IconName] as RefIcon;
-    if (key.endsWith("Outlined")) {
-      outlineds.push(icon);
-    } else if (key.endsWith("Filled")) {
-      filleds.push(icon);
-    } else if (key.endsWith("TwoTone")) {
-      twoTones.push(icon);
-    } else {
-      continue;
+  const handleSerch: SearchProps["onSearch"] = (value) => {
+    setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
+  };
+
+  const handleClick = (icon: RefIcon, e: React.MouseEvent<HTMLDivElement>) => {
+    const currentCard = e.currentTarget;
+    const lastCard = lastPickedCard.current;
+
+    if (lastCard?.dataset["iconName"] === currentCard.dataset["iconName"]) {
+      return;
     }
-    iconMap.set(key, icon);
-  }
 
-  const tabItems: TabsProps["items"] = [
-    {
-      label: "线框风格",
-      key: "outlineds",
-      children: (
-        <div>
-          <List
-            grid={{ gutter: 16, xs: 2, sm: 4, md: 5, lg: 6, xl: 8, xxl: 10 }}
-            dataSource={outlineds}
-            renderItem={(Icon) => (
-              <List.Item>
-                <Card hoverable className={styles.card}>
-                  <Icon />
-                  <Meta description={Icon.displayName} />
-                </Card>
-              </List.Item>
-            )}
-          ></List>
-        </div>
-      ),
-    },
-    {
-      label: "实底风格",
-      key: "filleds",
-      children: (
-        <div>
-          {filleds.map((Icon) => (
-            <Icon key={Icon.displayName} />
-          ))}
-        </div>
-      ),
-    },
-    {
-      label: "双色风格",
-      key: "twoTones",
-      children: (
-        <div>
-          {twoTones.map((Icon) => (
-            <Icon key={Icon.displayName} />
-          ))}
-        </div>
-      ),
-    },
-  ];
+    // console.log(lastCard?.dataset["iconName"] + " > " + currentCard.dataset["iconName"]);
+
+    onPick && onPick(icon);
+
+    if (lastCard) {
+      lastCard.style.backgroundColor = "";
+    }
+
+    lastPickedCard.current = currentCard;
+    currentCard.style.backgroundColor = controlItemBgActive;
+  };
 
   return (
     <div>
-      <Tabs defaultActiveKey="outlineds" items={tabItems} />
+      <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
+      <List>
+        <VirtualList
+          itemHeight={75}
+          itemKey={(row) => row.map((i) => i.displayName).join("-")}
+          data={subgroup(
+            iconNams.map((name) => getIconByName(name)),
+            columns
+          )}
+        >
+          {(iconRow) => (
+            <List.Item>
+              <Flex justify="space-between" style={{ width: "100%" }}>
+                {iconRow.map((Icon) => (
+                  <Card
+                    hoverable
+                    key={Icon.displayName}
+                    className={styles.card}
+                    data-icon-name={Icon.displayName}
+                    onClick={(e) => handleClick(Icon, e)}
+                  >
+                    <Icon />
+                    <Card.Meta description={<span title={Icon.displayName}>{Icon.displayName}</span>} />
+                  </Card>
+                ))}
+              </Flex>
+            </List.Item>
+          )}
+        </VirtualList>
+      </List>
     </div>
   );
 };
 
+function subgroup<T>(arr: T[], size: number) {
+  const result: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+  return result;
+}
+
 export default IconPicker;
+export type { IconPickerProps, RefIcon };
