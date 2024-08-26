@@ -15,7 +15,15 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     token: { controlItemBgActive },
   } = theme.useToken();
 
-  const { columns = 8, searchWidth = 200, showPickedBg = true, onPick } = props;
+  const {
+    width,
+    height,
+    columns = 8,
+    showPickedBg = true,
+    searchWidth = "100%",
+    iconJustify = "space-between",
+    onPick,
+  } = props;
 
   const handleSerch: SearchProps["onSearch"] = (value) => {
     setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
@@ -39,8 +47,9 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
   return (
     <div>
       <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
-      <List>
+      <List style={{ width: width }}>
         <VirtualList
+          height={height}
           itemHeight={75}
           itemKey={(row) => row.map((i) => i.displayName).join("-")}
           data={subgroup(
@@ -50,7 +59,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
         >
           {(iconRow) => (
             <List.Item>
-              <Flex justify="space-between" style={{ width: "100%" }}>
+              <Flex justify={iconJustify} style={{ width: "100%" }}>
                 {iconRow.map((Icon) => (
                   <Card
                     hoverable
