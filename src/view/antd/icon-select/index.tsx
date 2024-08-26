@@ -1,7 +1,7 @@
-import { IconPicker } from "@/component";
-import { RefIcon } from "@/component/icon-picker";
-import { Select, SelectProps } from "antd";
 import { useState } from "react";
+import { IconPicker } from "@/component";
+import { Select, SelectProps } from "antd";
+import { RefIcon } from "@/component/icon-picker";
 
 export default function View() {
   const [val, setVal] = useState<RefIcon>();
@@ -13,19 +13,21 @@ export default function View() {
   };
 
   const labelRender: SelectProps["labelRender"] = () => {
-    const Icon = val!;
-    return (
-      <span>
-        <Icon /> {val?.displayName}
-      </span>
-    );
+    if (val) {
+      const Icon = val;
+      return (
+        <span>
+          <Icon /> {val.displayName}
+        </span>
+      );
+    }
   };
 
   return (
     <Select
       value={val}
       open={open}
-      style={{ width: 300 }}
+      style={{ width: 200 }}
       labelRender={labelRender}
       popupMatchSelectWidth={false}
       onDropdownVisibleChange={(visible) => setOpen(visible)}
