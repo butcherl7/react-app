@@ -12,6 +12,10 @@ interface IconPickerProps {
    */
   searchWidth?: number | string;
   /**
+   * 是否显示已选择后的背景色。
+   */
+  showPickedBg?: boolean;
+  /**
    * 选择（点击）图标后的回调。
    */
   onPick?: (icon: RefIcon) => void;

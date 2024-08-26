@@ -15,7 +15,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     token: { controlItemBgActive },
   } = theme.useToken();
 
-  const { columns = 8, searchWidth = 200, onPick } = props;
+  const { columns = 8, searchWidth = 200, showPickedBg = true, onPick } = props;
 
   const handleSerch: SearchProps["onSearch"] = (value) => {
     setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
@@ -25,19 +25,14 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     const currentCard = e.currentTarget;
     const lastCard = lastPickedCard.current;
 
-    if (lastCard?.dataset["iconName"] === currentCard.dataset["iconName"]) {
-      return;
-    }
-
-    // console.log(lastCard?.dataset["iconName"] + " > " + currentCard.dataset["iconName"]);
-
-    onPick && onPick(icon);
-
-    if (lastCard) {
-      lastCard.style.backgroundColor = "";
-    }
+    if (lastCard?.dataset["iconName"] === currentCard.dataset["iconName"]) return;
 
     lastPickedCard.current = currentCard;
+    onPick && onPick(icon);
+
+    if (!showPickedBg) return;
+
+    if (lastCard) lastCard.style.backgroundColor = "";
     currentCard.style.backgroundColor = controlItemBgActive;
   };
 
