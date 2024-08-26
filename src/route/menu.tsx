@@ -145,7 +145,7 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "icon",
             title: "Icon",
-            filepath: "/src/view/antd/icon/index.tsx",
+            filepath: "/src/view/antd/icon-select/index.tsx",
             icon: <OrderedListOutlined />,
           },
         ],
