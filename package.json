@@ -15,6 +15,7 @@
     "antd": "^5.20.1",
     "dayjs": "^1.11.12",
     "echarts": "^5.5.1",
+    "rc-virtual-list": "^3.14.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router": "^6.26.0",
