@@ -34,20 +34,13 @@ export default function View() {
         onDropdownVisibleChange={(visible) => setOpen(visible)}
         placeholder="Pick you icon"
         dropdownRender={() => (
-          <IconPicker
-            width={450}
-            height={300}
-            columns={4}
-            showPickedBg={false}
-            iconJustify="space-evenly"
-            onPick={handlePick}
-          />
+          <IconPicker width={520} height={400} showPickedBg={false} showSearch onPick={handlePick} />
         )}
       />
 
       <Divider />
 
-      <IconPicker height={400} />
+      <IconPicker />
     </div>
   );
 }
