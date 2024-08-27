@@ -57,7 +57,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
               onClick={(e) => handleClick(Icon, e)}
             >
               <Icon />
-              <Card.Meta description={<span title={Icon.displayName}>{Icon.displayName}</span>} />
+              <Card.Meta description={Icon.displayName} />
             </Card>
           ))}
       </div>
