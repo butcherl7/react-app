@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
+import { useContext, useMemo, useRef, useState } from "react";
 import { Layout, Menu, FloatButton, MenuProps, theme } from "antd";
-import React, { useContext, useMemo, useRef, useState } from "react";
 
 import { ThemeContext } from "@/context";
 import { APP_MENUS, createAntdMenu, AppMenu } from "@/route/menu";
@@ -9,7 +9,7 @@ import styles from "./index.module.scss";
 
 const { Sider, Content } = Layout;
 
-const Framework: React.FC = () => {
+export default function Framework() {
   const location = useLocation();
   const contentRef = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
@@ -25,9 +25,9 @@ const Framework: React.FC = () => {
   const menuMemo = useMemo(() => {
     const pathname = location.pathname;
     const menuItems = createAntdMenu(APP_MENUS);
-    const rootMenuKeys = getRootMenuKeys(APP_MENUS);
+    const rootMenuKeys = findRootMenuKeys(APP_MENUS);
 
-    const initialOpenKeys = findkeys(menuItems, pathname, []);
+    const initialOpenKeys = findOpenKeys(menuItems, pathname);
     const initialSelectedKey = initialOpenKeys.length > 0 ? [initialOpenKeys[0]] : [];
 
     // 系统菜单，一级菜单 key，初次打开的菜单 key，初次选中的菜单 key
@@ -75,17 +75,17 @@ const Framework: React.FC = () => {
       </Layout>
     </Layout>
   );
-};
+}
 
 /**
  * 获取所有一级菜单的 key.
  */
-function getRootMenuKeys(menus: AppMenu[]): string[] {
-  const roots: number[] = [];
+function findRootMenuKeys(menus: AppMenu[]): string[] {
+  const roots = [];
 
   for (const menu of menus) {
     if (menu.path === "/") {
-      menu.children?.forEach((child) => !child.notMenu && roots.push(child.id));
+      menu.children?.forEach((child) => !child.index && roots.push(child.id));
     } else {
       !menu.notMenu && roots.push(menu.id);
     }
@@ -101,20 +101,22 @@ function getRootMenuKeys(menus: AppMenu[]): string[] {
  * @param openKeys 所有要打开的菜单 key 数组，调用时传空数组。
  * @returns 所有要打开的菜单 key 数组
  */
-const findkeys = (menus: any, pathname: string, openKeys: string[]): string[] => {
-  for (const { key, path, children } of menus) {
-    if (path === pathname || "/" + path === pathname) {
-      openKeys.push(key);
-      return openKeys;
-    }
-    if (Array.isArray(children) && children.length > 0) {
-      if (findkeys(children, pathname, openKeys).length > 0) {
-        openKeys.push(key); // push parent key.
+const findOpenKeys = (menus: any, pathname: string) => {
+  const f = (menus: any, pathname: string, openKeys: string[]): string[] => {
+    for (const { key, path, children } of menus) {
+      if (path === pathname || "/" + path === pathname) {
+        openKeys.push(key);
         return openKeys;
       }
+      if (Array.isArray(children) && children.length > 0) {
+        if (f(children, pathname, openKeys).length > 0) {
+          openKeys.push(key); // push parent key.
+          return openKeys;
+        }
+      }
     }
-  }
-  return openKeys;
-};
+    return openKeys;
+  };
 
-export default Framework;
+  return f(menus, pathname, []).map((key) => key + "");
+};
