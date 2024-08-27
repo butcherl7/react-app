@@ -47,36 +47,23 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
   return (
     <div>
       <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
-      <List style={{ width: width }}>
-        <VirtualList
-          height={height}
-          itemHeight={75}
-          itemKey={(row) => row.map((i) => i.displayName).join("-")}
-          data={subgroup(
-            iconNams.map((name) => getIconByName(name)),
-            columns
-          )}
-        >
-          {(iconRow) => (
-            <List.Item>
-              <Flex justify={iconJustify} style={{ width: "100%" }}>
-                {iconRow.map((Icon) => (
-                  <Card
-                    hoverable
-                    key={Icon.displayName}
-                    className={styles.card}
-                    data-icon-name={Icon.displayName}
-                    onClick={(e) => handleClick(Icon, e)}
-                  >
-                    <Icon />
-                    <Card.Meta description={<span title={Icon.displayName}>{Icon.displayName}</span>} />
-                  </Card>
-                ))}
-              </Flex>
-            </List.Item>
-          )}
-        </VirtualList>
-      </List>
+
+      <div className={styles["card-container"]}>
+        {iconNams
+          .map((name) => getIconByName(name))
+          .map((Icon) => (
+            <Card
+              hoverable
+              key={Icon.displayName}
+              className={styles.card}
+              data-icon-name={Icon.displayName}
+              onClick={(e) => handleClick(Icon, e)}
+            >
+              <Icon />
+              <Card.Meta description={<span title={Icon.displayName}>{Icon.displayName}</span>} />
+            </Card>
+          ))}
+      </div>
     </div>
   );
 };
