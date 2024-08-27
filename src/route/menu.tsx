@@ -5,7 +5,7 @@ import Home from "@/view/home";
 import Framework from "@/view/frame";
 import { getIconByName } from "@/component/icon-picker/util";
 
-type MenuItem = Required<MenuProps>["items"][number];
+type MenuItem = Required<MenuProps>["items"][number] & Record<string, any>;
 
 /**
  * 菜单结构。
@@ -217,6 +217,7 @@ function createAntdMenu(menus: AppMenu[]): MenuItem[] {
 
   for (const menu of menus) {
     const hasChildren = Array.isArray(menu.children) && menu.children.length > 0;
+    // 框架和 index route 不生成菜单。
     const notMenu = menu.path === "/" || menu.index;
 
     if (notMenu) {
@@ -229,21 +230,19 @@ function createAntdMenu(menus: AppMenu[]): MenuItem[] {
     } else {
       const fullpath = (menu.prevPath ? menu.prevPath + "/" + menu.path : menu.path) as string;
 
-      const menuItem: any = {
+      const menuItem: MenuItem = {
+        key: menu.id,
         path: fullpath, // 方便通过路由找到这个菜单项。
-        key: menu.id + "",
         label: <NavLink to={fullpath}>{menu.title}</NavLink>,
       };
 
       const Icon = getIconByName(menu.iconName);
-      if (Icon) {
-        menuItem.icon = <Icon />;
-      }
+      if (Icon) menuItem.icon = <Icon />;
 
       if (hasChildren) {
         menu.children!.forEach((child) => (child.prevPath = fullpath));
         menuItem.children = createAntdMenu(menu.children!);
-        // 有 children 就当不是路由。
+        // 有 children 就当做目录。
         menuItem.label = menu.title;
       }
       menuItems.push(menuItem);

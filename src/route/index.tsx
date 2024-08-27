@@ -18,8 +18,8 @@ const router = createBrowserRouter(createRouterObject(APP_MENUS));
  *  new Promise((resolve) => setTimeout(resolve, 2000)).then(() => import(filepath))
  * );
  * ```
- * @param menus SystemMenus
- * @returns RouterObject
+ * @param menus AppMenus
+ * @returns RouterObject[]
  */
 function createRouterObject(menus: AppMenu[]): RouteObject[] {
   return menus.map(({ path, filepath, element, index, children }) => {
