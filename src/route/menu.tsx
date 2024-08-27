@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 
 import Home from "@/view/home";
 import Framework from "@/view/frame";
-import Effect from "@/view/react/effect";
 import { getIconByName } from "@/component/icon-picker/util";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -183,7 +182,7 @@ const APP_MENUS: AppMenu[] = [
             id: ID.increment(),
             path: "effect",
             title: "Effect",
-            element: <Effect />,
+            filepath: "/src/view/react/effect/index.tsx",
             iconName: "SmileOutlined",
           },
         ],
