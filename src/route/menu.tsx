@@ -1,10 +1,10 @@
 import type { MenuProps } from "antd";
 import { NavLink } from "react-router-dom";
-import { AreaChartOutlined, BarChartOutlined, OrderedListOutlined, WindowsOutlined } from "@ant-design/icons";
 
 import Home from "@/view/home";
 import Framework from "@/view/frame";
 import Effect from "@/view/react/effect";
+import { getIconByName } from "@/component/icon-picker/util";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -50,7 +50,7 @@ interface AppMenu {
   /**
    * 菜单图标
    */
-  icon?: React.ReactNode;
+  iconName?: string;
 
   /**
    * 菜单元素
@@ -98,7 +98,7 @@ const APP_MENUS: AppMenu[] = [
         id: ID.increment(),
         path: "chart",
         title: "Chart",
-        icon: <BarChartOutlined />,
+        iconName: "BarChartOutlined",
         children: [
           {
             id: ID.increment(),
@@ -110,14 +110,14 @@ const APP_MENUS: AppMenu[] = [
             path: "demo1",
             title: "Demo1",
             filepath: "/src/view/echart/demo1/index.tsx",
-            icon: <AreaChartOutlined />,
+            iconName: "AreaChartOutlined",
           },
           {
             id: ID.increment(),
             path: "demo2",
             title: "Demo2",
             filepath: "/src/view/echart/demo2/index.tsx",
-            icon: <WindowsOutlined />,
+            iconName: "WindowsOutlined",
           },
         ],
       },
@@ -125,28 +125,28 @@ const APP_MENUS: AppMenu[] = [
         id: ID.increment(),
         path: "antd",
         title: "AntD",
-        icon: <OrderedListOutlined />,
+        iconName: "AntDesignOutlined",
         children: [
           {
             id: ID.increment(),
             path: "list",
             title: "List",
             filepath: "/src/view/antd/list/index.tsx",
-            icon: <OrderedListOutlined />,
+            iconName: "OrderedListOutlined",
           },
           {
             id: ID.increment(),
             path: "token",
             title: "Token",
             filepath: "/src/view/antd/overview/index.tsx",
-            icon: <OrderedListOutlined />,
+            iconName: "InsertRowAboveOutlined",
           },
           {
             id: ID.increment(),
             path: "icon",
             title: "Icon",
             filepath: "/src/view/antd/icon-select/index.tsx",
-            icon: <OrderedListOutlined />,
+            iconName: "DiscordOutlined",
           },
         ],
       },
@@ -154,20 +154,20 @@ const APP_MENUS: AppMenu[] = [
         id: ID.increment(),
         path: "antv",
         title: "AntV",
-        icon: <OrderedListOutlined />,
+        iconName: "BarChartOutlined",
         children: [
           {
             id: ID.increment(),
             path: "g2",
             title: "G2",
-            icon: <OrderedListOutlined />,
+            iconName: "BgColorsOutlined",
             children: [
               {
                 id: ID.increment(),
                 path: "demo1",
                 title: "Demo1",
                 filepath: "/src/view/antv/g2/demo1/index.tsx",
-                icon: <OrderedListOutlined />,
+                iconName: "LineChartOutlined",
               },
             ],
           },
@@ -177,14 +177,14 @@ const APP_MENUS: AppMenu[] = [
         id: ID.increment(),
         path: "react",
         title: "React",
-        icon: <OrderedListOutlined />,
+        iconName: "ReadOutlined",
         children: [
           {
             id: ID.increment(),
             path: "effect",
             title: "Effect",
             element: <Effect />,
-            icon: <OrderedListOutlined />,
+            iconName: "SmileOutlined",
           },
         ],
       },
@@ -233,9 +233,13 @@ function createAntdMenu(menus: AppMenu[]): MenuItem[] {
       const menuItem: any = {
         path: fullpath, // 方便通过路由找到这个菜单项。
         key: menu.id + "",
-        icon: menu.icon,
         label: <NavLink to={fullpath}>{menu.title}</NavLink>,
       };
+
+      const Icon = getIconByName(menu.iconName);
+      if (Icon) {
+        menuItem.icon = <Icon />;
+      }
 
       if (hasChildren) {
         menu.children!.forEach((child) => (child.prevPath = fullpath));
