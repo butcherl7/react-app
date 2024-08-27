@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IconPicker } from "@/component";
-import { Select, SelectProps } from "antd";
+import { Divider, Select, SelectProps } from "antd";
 import { RefIcon } from "@/component/icon-picker";
 
 export default function View() {
@@ -24,24 +24,30 @@ export default function View() {
   };
 
   return (
-    <Select
-      value={val}
-      open={open}
-      style={{ width: 200 }}
-      labelRender={labelRender}
-      popupMatchSelectWidth={false}
-      onDropdownVisibleChange={(visible) => setOpen(visible)}
-      placeholder="Pick you icon"
-      dropdownRender={() => (
-        <IconPicker
-          width={450}
-          height={300}
-          columns={4}
-          showPickedBg={false}
-          iconJustify="space-evenly"
-          onPick={handlePick}
-        />
-      )}
-    />
+    <div>
+      <Select
+        value={val}
+        open={open}
+        style={{ width: 200 }}
+        labelRender={labelRender}
+        popupMatchSelectWidth={false}
+        onDropdownVisibleChange={(visible) => setOpen(visible)}
+        placeholder="Pick you icon"
+        dropdownRender={() => (
+          <IconPicker
+            width={450}
+            height={300}
+            columns={4}
+            showPickedBg={false}
+            iconJustify="space-evenly"
+            onPick={handlePick}
+          />
+        )}
+      />
+
+      <Divider />
+
+      <IconPicker height={400} />
+    </div>
   );
 }
