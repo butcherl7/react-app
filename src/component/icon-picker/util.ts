@@ -54,6 +54,7 @@ function getIconType(iconName: string) {
 /**
  * 根据图标名称获取图标组件。
  * @param  name 图标名称。
+ * @returns 图标组件，未找到则返回 `null`。
  */
 function getIconByName(name: string | null | undefined): RefIcon | null {
   if (!name) return null;
