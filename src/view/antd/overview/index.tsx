@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import React, { useContext, useMemo, useRef, useState } from "react";
-import { MoonOutlined, RadiusUprightOutlined, SunOutlined } from "@ant-design/icons";
+import { MoonOutlined, MoreOutlined, RadiusUprightOutlined, SunOutlined } from "@ant-design/icons";
 import {
   Alert,
   Button,
@@ -11,6 +11,7 @@ import {
   DatePicker,
   Divider,
   Drawer,
+  Dropdown,
   Flex,
   Input,
   Modal,
@@ -26,7 +27,15 @@ import {
   notification,
 } from "antd";
 
-import type { GetProps, NotificationArgsProps, MessageArgsProps, TableProps, SelectProps, CalendarProps } from "antd";
+import type {
+  GetProps,
+  NotificationArgsProps,
+  MessageArgsProps,
+  TableProps,
+  SelectProps,
+  CalendarProps,
+  MenuProps,
+} from "antd";
 
 import { ThemeContext } from "@/context";
 
@@ -441,16 +450,21 @@ function MyCalendar() {
   const [date, setDate] = useState(today);
   const userMap = useRef<Map<string, [string, string]>>(new Map());
 
-  const headerRender: CalendarProps<Dayjs>["headerRender"] = ({ value, onChange }) => {
-    const yearOptions = new Array(3).fill(today.year() - 1).map((v, ix) => ({
-      value: v + ix,
-      label: v + ix,
-    }));
+  const handleExchange = () => {
+    console.log("Exchange");
+  };
 
-    const monthsOptions = new Array(12).fill(0).map((_v, ix) => ({
-      value: ix,
-      label: dayjs(ix + 1 + "").format("MMM"),
-    }));
+  const items: MenuProps["items"] = [
+    { key: "1", label: <span onClick={handleExchange}>Exchange</span> },
+    { key: "2", label: <span>Note</span> },
+  ];
+
+  const headerRender: CalendarProps<Dayjs>["headerRender"] = ({ value, onChange }) => {
+    const yearOptions = new Array(3).fill(today.year() - 1).map((v, ix) => ({ value: v + ix, label: v + ix }));
+
+    const monthsOptions = new Array(12)
+      .fill(0)
+      .map((_v, ix) => ({ value: ix, label: dayjs(ix + 1 + "").format("MMM") }));
 
     const wid = { width: 80 };
 
@@ -485,6 +499,12 @@ function MyCalendar() {
               options={monthsOptions}
               onChange={(newMonth) => onChange(value.month(newMonth))}
             ></Select>
+          </Col>
+
+          <Col>
+            <Dropdown menu={{ items }}>
+              <Button icon={<MoreOutlined />}></Button>
+            </Dropdown>
           </Col>
         </Row>
       </div>
