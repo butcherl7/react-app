@@ -4,17 +4,17 @@ import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
 
 interface IconPickerProps {
   /**
-   * 虚拟列表宽度。
+   * 整体宽度。
    */
   width?: number | string;
   /**
-   * 虚拟列表高度。
+   * 整体高度。
    */
-  height?: number;
+  height?: number | string;
   /**
-   * 每行展示的图标数量。
+   * 是否显示搜索框。
    */
-  columns?: number;
+  showSearch?: boolean;
   /**
    * 搜索框宽度。
    */
@@ -23,10 +23,6 @@ interface IconPickerProps {
    * 是否显示已选择后的背景色。
    */
   showPickedBg?: boolean;
-  /**
-   * 每行图标对齐方式。
-   */
-  iconJustify?: React.CSSProperties["justifyContent"];
   /**
    * 选择（点击）图标后的回调。
    */

@@ -1,6 +1,5 @@
-import VirtualList from "rc-virtual-list";
 import React, { useRef, useState } from "react";
-import { Card, Flex, GetProps, Input, List, theme } from "antd";
+import { Card, GetProps, Input, theme } from "antd";
 
 import { AllIconsName, IconPickerProps, RefIcon, getIconByName } from "./util";
 import styles from "./index.module.scss";
@@ -15,15 +14,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     token: { controlItemBgActive },
   } = theme.useToken();
 
-  const {
-    width,
-    height,
-    columns = 8,
-    showPickedBg = true,
-    searchWidth = "100%",
-    iconJustify = "space-between",
-    onPick,
-  } = props;
+  const { width, height, showPickedBg = true, showSearch = false, searchWidth = "100%", onPick } = props;
 
   const handleSerch: SearchProps["onSearch"] = (value) => {
     setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
@@ -44,9 +35,15 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     currentCard.style.backgroundColor = controlItemBgActive;
   };
 
+  const wrapperStyle: React.CSSProperties = { overflowY: "auto" };
+  if (width !== undefined) wrapperStyle.width = width;
+  if (height !== undefined) wrapperStyle.height = height;
+
   return (
-    <div>
-      <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
+    <div style={wrapperStyle}>
+      <div hidden={!showSearch} className={styles["search-bar"]}>
+        <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
+      </div>
 
       <div className={styles["card-container"]}>
         {iconNams
@@ -67,14 +64,6 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
     </div>
   );
 };
-
-function subgroup<T>(arr: T[], size: number) {
-  const result: T[][] = [];
-  for (let i = 0; i < arr.length; i += size) {
-    result.push(arr.slice(i, i + size));
-  }
-  return result;
-}
 
 export default IconPicker;
 export type { IconPickerProps, RefIcon };

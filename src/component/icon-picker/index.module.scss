@@ -1,3 +1,10 @@
+.search-bar {
+  margin-bottom: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 .card-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
