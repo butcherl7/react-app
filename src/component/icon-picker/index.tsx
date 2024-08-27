@@ -16,7 +16,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
 
   const { width, height, showPickedBg = true, showSearch = false, searchWidth = "100%", onPick } = props;
 
-  const handleSerch: SearchProps["onSearch"] = (value) => {
+  const handleSearch: SearchProps["onSearch"] = (value) => {
     setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
   };
 
@@ -42,7 +42,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
   return (
     <div style={wrapperStyle}>
       <div hidden={!showSearch} className={styles["search-bar"]}>
-        <Input.Search allowClear onSearch={handleSerch} style={{ width: searchWidth }} />
+        <Input.Search allowClear onSearch={handleSearch} style={{ width: searchWidth }} />
       </div>
 
       <div className={styles["card-container"]}>
