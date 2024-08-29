@@ -48,6 +48,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
       <div className={styles["card-container"]}>
         {iconNams
           .map((name) => getIconByName(name))
+          .filter((icon) => !!icon)
           .map((Icon) => (
             <Card
               hoverable
