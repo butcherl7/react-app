@@ -1,5 +1,5 @@
 import React from "react";
-import * as AntIcon from "@ant-design/icons";
+import * as AntIconsObj from "@ant-design/icons";
 import { AntdIconProps } from "@ant-design/icons/lib/components/AntdIcon";
 
 interface IconPickerProps {
@@ -29,7 +29,11 @@ interface IconPickerProps {
   onPick?: (icon: RefIcon) => void;
 }
 
-type IconName = keyof typeof AntIcon;
+type IconName = keyof typeof AntIconsObj;
+
+/**
+ * 系统 SVG 图标。
+ */
 type RefIcon = React.ForwardRefExoticComponent<Omit<AntdIconProps, "ref"> & React.RefAttributes<HTMLSpanElement>>;
 
 const IconTypes: string[] = ["Outlined", "Filled", "TwoTone"];
@@ -37,7 +41,7 @@ const IconTypes: string[] = ["Outlined", "Filled", "TwoTone"];
 /**
  * 所有图标的名称。
  */
-const AllIconsName = Object.keys(AntIcon)
+const AppIconNames = Object.keys(AntIconsObj)
   .filter((key) => !!getIconType(key))
   .sort((a, b) => {
     const nameA = IconTypes.findIndex((type) => type === getIconType(a)) + a;
@@ -49,6 +53,7 @@ function getIconType(iconName: string) {
   if (iconName.endsWith(IconTypes[0])) return IconTypes[0];
   if (iconName.endsWith(IconTypes[1])) return IconTypes[1];
   if (iconName.endsWith(IconTypes[2])) return IconTypes[2];
+  return null;
 }
 
 /**
@@ -56,10 +61,15 @@ function getIconType(iconName: string) {
  * @param  name 图标名称。
  * @returns 图标组件，未找到则返回 `null`。
  */
-function getIconByName(name: string | null | undefined): RefIcon | null {
-  if (!name) return null;
-  return AntIcon[name as IconName] as RefIcon;
+function getIconByName(name?: string): RefIcon | null {
+  if (!name) {
+    return null;
+  }
+  if (!AppIconNames.includes(name)) {
+    return null;
+  }
+  return AntIconsObj[name as IconName] as RefIcon;
 }
 
-export { getIconByName, AllIconsName };
+export { AppIconNames, getIconByName };
 export type { IconPickerProps, RefIcon };

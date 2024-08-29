@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Card, GetProps, Input, theme } from "antd";
 
-import { AllIconsName, IconPickerProps, RefIcon, getIconByName } from "./util";
 import styles from "./index.module.scss";
+import { AppIconNames, IconPickerProps, RefIcon, getIconByName } from "./util";
 
 type SearchProps = GetProps<typeof Input.Search>;
 
 const IconPicker: React.FC<IconPickerProps> = (props) => {
-  const [iconNams, setIconNams] = useState(AllIconsName);
+  const [iconNams, setIconNams] = useState(AppIconNames);
   const lastPickedCard = useRef<HTMLDivElement>();
 
   const {
@@ -17,7 +17,7 @@ const IconPicker: React.FC<IconPickerProps> = (props) => {
   const { width, height, showPickedBg = true, showSearch = false, searchWidth = "100%", onPick } = props;
 
   const handleSearch: SearchProps["onSearch"] = (value) => {
-    setIconNams(AllIconsName.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
+    setIconNams(AppIconNames.filter((key) => key.toLowerCase().includes(value.toLowerCase())));
   };
 
   const handleClick = (icon: RefIcon, e: React.MouseEvent<HTMLDivElement>) => {
